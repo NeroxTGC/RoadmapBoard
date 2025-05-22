@@ -19,7 +19,7 @@ export const Layout = () => {
         <header className="bg-white dark:bg-gray-900 border-b border-primary-800 dark:border-dark-border">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center">
             <Link to="/features">
-              <h1 className="text-xl2 font-semibold text-black dark:text-white">RoadmapBoard</h1>
+              <h1 className="text-xl2 font-semibold text-black dark:text-white">FeatureBoard</h1>
             </Link>
             <div className="flex items-center space-x-4">
               <ThemeSwitcher />

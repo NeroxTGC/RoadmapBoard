@@ -1,8 +1,8 @@
-app RoadmapBoard {
+app FeatureBoard {
   wasp: {
     version: "^0.16.3"
   },
-  title: "RoadmapBoard",
+  title: "FeatureBoard",
   client: {
     rootComponent: import { Layout } from "@src/Layout.jsx",
   },
