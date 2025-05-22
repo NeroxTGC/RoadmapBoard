@@ -1,0 +1,72 @@
+datasource db {
+  provider = "sqlite"
+  // Wasp requires that the url is set to the DATABASE_URL environment variable.
+  url      = env("DATABASE_URL")
+}
+
+// Wasp requires the `prisma-client-js` generator to be present.
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                Int               @id @default(autoincrement())
+  username          String?
+  isAdmin           Boolean           @default(false)
+  features          Feature[]
+  comments          Comment[]
+  upvotes           Upvote[]
+  commentReactions  CommentReaction[]
+}
+
+// --- Feature Management Models ---
+model Feature {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  status      String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  comments    Comment[]
+  upvotes     Upvote[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Comment {
+  id         Int               @id @default(autoincrement())
+  content    String
+  author     User             @relation(fields: [authorId], references: [id])
+  authorId   Int
+  feature    Feature          @relation(fields: [featureId], references: [id], onDelete: Cascade)
+  featureId  Int
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  reactions  CommentReaction[] @relation("CommentReactions")
+
+  @@index([authorId])
+  @@index([featureId])
+}
+
+model CommentReaction {
+  id        Int      @id @default(autoincrement())
+  type      String   
+  comment   Comment  @relation("CommentReactions", fields: [commentId], references: [id], onDelete: Cascade)
+  commentId Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+
+  @@unique([commentId, userId, type])
+  @@index([commentId])
+  @@index([userId])
+}
+
+model Upvote {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  feature   Feature  @relation(fields: [featureId], references: [id])
+  featureId Int
+  createdAt DateTime @default(now())
+}

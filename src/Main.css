@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --auth-form-brand: theme(colors.primary.500);
+  --auth-form-brand-accent: theme(colors.primary.600);
+  --auth-form-submit-button-text-color: theme(colors.white);
+  --auth-form-text-color: theme(colors.gray.900);
+}
+
+:root[class~="dark"] {
+  --auth-form-text-color: theme(colors.gray.100);
+}
+
+/* Global dark mode input styles */
+.dark input[type="text"],
+.dark input[type="password"],
+.dark input[type="email"] {
+  @apply text-gray-100 !important;
+  @apply bg-gray-800 !important;
+  @apply border-gray-600 !important;
+}
+
+/* Specific auth form styles */
+.c-cqUsHv input {
+  @apply text-gray-900 dark:text-gray-100;
+  @apply bg-white dark:bg-gray-800;
+  @apply border-gray-300 dark:border-gray-600;
+}
